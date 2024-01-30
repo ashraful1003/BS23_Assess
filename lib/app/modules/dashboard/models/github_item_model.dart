@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final githubItemModel = githubItemModelFromJson(jsonString);
-
 import 'dart:convert';
 
 GithubItemModel githubItemModelFromJson(String str) => GithubItemModel.fromJson(json.decode(str));
@@ -11,7 +7,7 @@ String githubItemModelToJson(GithubItemModel data) => json.encode(data.toJson())
 class GithubItemModel {
   int totalCount;
   bool incompleteResults;
-  List<Item> items;
+  List<GitHubItem> items;
 
   GithubItemModel({
     required this.totalCount,
@@ -22,7 +18,7 @@ class GithubItemModel {
   factory GithubItemModel.fromJson(Map<String, dynamic> json) => GithubItemModel(
     totalCount: json["total_count"],
     incompleteResults: json["incomplete_results"],
-    items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
+    items: List<GitHubItem>.from(json["items"].map((x) => GitHubItem.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,7 +28,7 @@ class GithubItemModel {
   };
 }
 
-class Item {
+class GitHubItem {
   int id;
   String nodeId;
   String name;
@@ -79,14 +75,6 @@ class Item {
   String labelsUrl;
   String releasesUrl;
   String deploymentsUrl;
-  DateTime createdAt;
-  DateTime updatedAt;
-  DateTime pushedAt;
-  String gitUrl;
-  String sshUrl;
-  String cloneUrl;
-  String svnUrl;
-  String homepage;
   int size;
   int stargazersCount;
   int watchersCount;
@@ -110,9 +98,9 @@ class Item {
   int forks;
   int openIssues;
   int watchers;
-  int score;
+  double score;
 
-  Item({
+  GitHubItem({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -159,14 +147,6 @@ class Item {
     required this.labelsUrl,
     required this.releasesUrl,
     required this.deploymentsUrl,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.pushedAt,
-    required this.gitUrl,
-    required this.sshUrl,
-    required this.cloneUrl,
-    required this.svnUrl,
-    required this.homepage,
     required this.size,
     required this.stargazersCount,
     required this.watchersCount,
@@ -193,7 +173,7 @@ class Item {
     required this.score,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory GitHubItem.fromJson(Map<String, dynamic> json) => GitHubItem(
     id: json["id"],
     nodeId: json["node_id"],
     name: json["name"],
@@ -240,14 +220,6 @@ class Item {
     labelsUrl: json["labels_url"],
     releasesUrl: json["releases_url"],
     deploymentsUrl: json["deployments_url"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    pushedAt: DateTime.parse(json["pushed_at"]),
-    gitUrl: json["git_url"],
-    sshUrl: json["ssh_url"],
-    cloneUrl: json["clone_url"],
-    svnUrl: json["svn_url"],
-    homepage: json["homepage"],
     size: json["size"],
     stargazersCount: json["stargazers_count"],
     watchersCount: json["watchers_count"],
@@ -321,14 +293,6 @@ class Item {
     "labels_url": labelsUrl,
     "releases_url": releasesUrl,
     "deployments_url": deploymentsUrl,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "pushed_at": pushedAt.toIso8601String(),
-    "git_url": gitUrl,
-    "ssh_url": sshUrl,
-    "clone_url": cloneUrl,
-    "svn_url": svnUrl,
-    "homepage": homepage,
     "size": size,
     "stargazers_count": stargazersCount,
     "watchers_count": watchersCount,
