@@ -11,12 +11,12 @@ class DashboardScreen extends StatelessWidget {
     DashboardController controller = Get.find();
     return Scaffold(
       appBar: const CustomAppBar(appBarTitleText: 'GitHub Repo List'),
-      body: ListView.builder(
+      body: Obx(() => ListView.builder(
           shrinkWrap: true,
           itemCount: controller.githubItems.length,
           itemBuilder: (context, index) {
             return Text(controller.githubItems[index].repoName);
-          }),
+          })),
     );
   }
 }
