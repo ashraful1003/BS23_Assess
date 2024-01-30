@@ -243,7 +243,7 @@ class GitHubItem {
     forks: json["forks"],
     openIssues: json["open_issues"],
     watchers: json["watchers"],
-    score: json["score"],
+    score: json["score"]??0,
   );
 
   Map<String, dynamic> toJson() => {

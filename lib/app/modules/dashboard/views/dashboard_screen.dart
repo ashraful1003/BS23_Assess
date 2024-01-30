@@ -1,5 +1,6 @@
 import 'package:bs23_assess/app/core/widgets/custom_app_bar.dart';
 import 'package:bs23_assess/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:bs23_assess/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,9 +16,16 @@ class DashboardScreen extends StatelessWidget {
           shrinkWrap: true,
           itemCount: controller.githubItems.length,
           itemBuilder: (context, index) {
-            return Text(controller.githubItems[index].repoName);
+            return GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.PROJECT_DETAILS, arguments: controller.githubItems[index]);
+              },
+              child: Container(
+                  height: 50,
+                  width: Get.width,
+                  child: Text(controller.githubItems[index].repoName)),
+            );
           })),
     );
   }
 }
-

@@ -22,6 +22,19 @@ class GithubRemoteDataSourceImpl extends BaseRemoteSource
     }
   }
 
+  @override
+  Future<GitHubItem> getProject(String userName, String repositoryName) {
+    var endpoint = "${DioProvider.baseUrl}/repos/$userName/$repositoryName";
+    var dioCall = dioClient.get(endpoint);
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseGithubProjectResponse(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   GithubItemModel _parseGithubRepoResponse(
       Response<dynamic> response) {
     return GithubItemModel.fromJson(response.data);
