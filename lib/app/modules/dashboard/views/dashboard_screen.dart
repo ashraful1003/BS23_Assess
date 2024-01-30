@@ -1,15 +1,19 @@
+import 'package:bs23_assess/app/core/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: const CustomAppBar(appBarTitleText: 'GitHub Repo List'),
+      body: ListView.builder(
+          shrinkWrap: true,
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Text(index.toString());
+          }),
+    );
   }
 }
