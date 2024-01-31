@@ -37,7 +37,9 @@ class DashboardController extends BaseController {
 
     pagingController.value.isLoadingPage = true;
 
-    var queryParams = SearchQueryParam(searchKeyWord: 'Flutter', pageNumber: pagingController.value.pageNumber);
+    var queryParams = SearchQueryParam(
+        searchKeyWord: 'Flutter',
+        pageNumber: pagingController.value.pageNumber);
 
     var githubRepoService = remoteRepository.getGithubRepos(queryParams);
     callDataService(githubRepoService, onSuccess: _handleGithubRepoList);
@@ -56,12 +58,13 @@ class DashboardController extends BaseController {
   void _handleGithubRepoList(GithubItemModel itemModel) {
     List<UiData>? repoList = itemModel.items
         .map((e) => UiData(
-              repoName: e.name,
-              owner: e.owner,
-              starNo: e.stargazersCount,
-              scores: e.score,
-              updateDate: e.updatedAt,
-            ))
+            repoName: e.name,
+            owner: e.owner,
+            starNo: e.stargazersCount,
+            scores: e.score,
+            forkNo: e.forksCount,
+            updateDate: e.updatedAt,
+            description: e.description))
         .toList();
 
     if (_isLastPage(repoList.length, itemModel.totalCount)) {

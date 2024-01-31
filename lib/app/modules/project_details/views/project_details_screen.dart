@@ -1,5 +1,6 @@
 import 'package:bs23_assess/app/core/widgets/custom_app_bar.dart';
 import 'package:bs23_assess/app/modules/project_details/controllers/project_details_controller.dart';
+import 'package:bs23_assess/app/modules/project_details/widgets/text_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,21 +12,27 @@ class ProjectDetailsScreen extends GetView<ProjectDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomAppBar(appBarTitleText: 'Details', isBackButtonEnabled: true),
+      appBar: const CustomAppBar(
+          appBarTitleText: 'Details', isBackButtonEnabled: true),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 15),
+          margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                margin: EdgeInsets.only(top: 15),
                 alignment: Alignment.center,
                 child: Hero(
                   tag: controller.uiData.repoName,
-                  child: SizedBox(
-                    height: Get.height / 10,
-                    width: Get.height / 10,
+                  child: Container(
+                    height: Get.height / 8,
+                    width: Get.height / 8,
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border:
+                        Border.all(color: Colors.green.shade200, width: 2)),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: CachedNetworkImage(
@@ -36,17 +43,22 @@ class ProjectDetailsScreen extends GetView<ProjectDetailsController> {
                   ),
                 ),
               ),
-              Text('Owner: ${controller.uiData.owner.login}',
-                  style: const TextStyle(fontSize: 20)),
-              Text('Profile Link: ${controller.uiData.owner.url}',
-                  style: const TextStyle(fontSize: 20)),
-              Text('Repo: ${controller.uiData.repoName}',
-                  style: const TextStyle(fontSize: 20)),
-              Text('Star Count: ${controller.uiData.starNo}',
-                  style: const TextStyle(fontSize: 20)),
-              Text(
-                  'Updated: ${DateFormat('dd MMM, yyyy').format(controller.uiData.updateDate)}',
-                  style: const TextStyle(fontSize: 20)),
+              TextWidget(
+                  title: 'Profile Link: ', value: controller.uiData.owner.url),
+              TextWidget(title: 'Repo: ', value: controller.uiData.repoName),
+              TextWidget(
+                  title: 'Star Count: ',
+                  value: controller.uiData.starNo.toString()),
+
+              TextWidget(
+                  title: 'Updated: ',
+                  value: DateFormat('dd MMM, yyyy hh:mm a').format(
+                      controller.uiData.updateDate)),
+              SizedBox(height: 15),
+              Text('Description', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Divider(),
+              Text(controller.uiData.description,
+                  style: const TextStyle(fontSize: 18)),
             ],
           ),
         ),

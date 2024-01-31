@@ -18,10 +18,13 @@ class RepoCard extends StatelessWidget {
       },
       child: Container(
           padding: EdgeInsets.all(10),
-          margin: EdgeInsets.only(bottom: 5),
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           width: Get.width,
-          color: Colors.green,
           alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: Colors.green.shade200,
+            borderRadius: BorderRadius.circular(8)
+          ),
           child: Row(
             children: [
               Hero(

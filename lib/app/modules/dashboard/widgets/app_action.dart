@@ -28,7 +28,7 @@ class AppAction extends StatelessWidget {
           isExpanded: true,
           iconEnabledColor: Colors.grey.shade400,
           underline: const SizedBox(),
-          hint: const Text("Select"),
+          hint: const Text("Sort By"),
           icon: const Icon(Icons.keyboard_arrow_down),
           items: items.map((String items) {
             return DropdownMenuItem(
