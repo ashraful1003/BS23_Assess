@@ -1,5 +1,5 @@
 import 'package:bs23_assess/app/core/base/paging_controller.dart';
-import 'package:bs23_assess/app/data/remote/dashboard_repository.dart';
+import 'package:bs23_assess/app/data/remote/dashboard_remote_repository.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/github_item_model.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/search_query_params.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/ui_data.dart';
@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:bs23_assess/app/core/base/base_controller.dart';
 
 class DashboardController extends BaseController {
-  final DashboardRepository repository =
-      Get.find(tag: (DashboardRepository).toString());
+  final DashboardRemoteRepository repository =
+      Get.find(tag: (DashboardRemoteRepository).toString());
 
   Rx<PagingController<UiData>> pagingController =
       PagingController<UiData>().obs;
