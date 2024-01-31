@@ -1,7 +1,8 @@
+import 'package:bs23_assess/app/modules/dashboard/models/github_item_model.dart';
+
 class UiData {
   String repoName;
-  String ownerName;
-  String avatar;
+  Owner owner;
   String description;
   int starNo;
   int forkNo;
@@ -10,8 +11,7 @@ class UiData {
 
   UiData(
       {this.repoName = '',
-      this.ownerName = '',
-      this.avatar = '',
+      required this.owner,
       this.description = '',
       this.starNo = 0,
       this.forkNo = 0,

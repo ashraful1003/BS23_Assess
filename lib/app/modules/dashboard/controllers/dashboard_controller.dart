@@ -53,7 +53,7 @@ class DashboardController extends BaseController {
     List<UiData>? repoList = itemModel.items
         .map((e) => UiData(
               repoName: e.name,
-              ownerName: e.owner.login,
+              owner: e.owner,
               starNo: e.stargazersCount,
               scores: e.score,
               updateDate: e.updatedAt,
