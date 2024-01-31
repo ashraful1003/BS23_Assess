@@ -4,6 +4,8 @@ This project is done during the assessment of BrainStation23
 
 I've designed and implemented api with these screen using Flutter.
 
+<img src="https://github.com/ashraful1003/BS23_Assess/assets/76874409/bf5f168a-fb48-47af-b4aa-c7521ba64f38" width="250" height="444" />
+
 ![Screenshot_1706726437](https://github.com/ashraful1003/BS23_Assess/assets/76874409/bf5f168a-fb48-47af-b4aa-c7521ba64f38)
 
 This is repository list, this part is in the ListView with pagination for infinity loop.
