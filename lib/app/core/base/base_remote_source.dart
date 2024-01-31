@@ -34,9 +34,9 @@ abstract class BaseRemoteSource {
     }
   }
 
-  Future<T> fetchLocalWithErrorParser<T>(String local) {
+  Future<Map> fetchLocalWithErrorParser<Map>(String local) async {
     try {
-      var response = json.decode(local);
+      Map response = await jsonDecode(local);
       return response;
     } catch (error) {
       if (error is BaseException) {

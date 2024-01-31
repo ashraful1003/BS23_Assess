@@ -1,9 +1,11 @@
 import 'package:bs23_assess/app/core/base/paging_controller.dart';
+import 'package:bs23_assess/app/data/preferences/github_store.dart';
 import 'package:bs23_assess/app/data/remote/dashboard_local_repository.dart';
 import 'package:bs23_assess/app/data/remote/dashboard_remote_repository.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/github_item_model.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/search_query_params.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/ui_data.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:bs23_assess/app/core/base/base_controller.dart';
 
@@ -20,29 +22,47 @@ class DashboardController extends BaseController {
   Rx<List<String>> sortItems = Rx<List<String>>([]);
   RxString sortType = ''.obs;
   RxString text = "".obs;
+  RxBool isNetAvailable = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     sortItems.value = ['Updated Date', 'Star Count'];
-    getGithubRepoListRemote();
+    netAvailable().then((value) => getGithubRepoListRemote());
   }
 
   Rx<List<UiData>> githubItemsController = Rx<List<UiData>>([]);
 
   List<UiData> get githubItems => githubItemsController.value.toList();
 
-  void getGithubRepoListRemote() {
+  Future<void> netAvailable() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.ethernet) {
+      isNetAvailable(true);
+    } else {
+      isNetAvailable(false);
+    }
+  }
+
+  void getGithubRepoListRemote() async {
     if (!pagingController.value.canLoadNextPage()) return;
 
     pagingController.value.isLoadingPage = true;
 
-    var queryParams = SearchQueryParam(
-        searchKeyWord: 'Flutter',
-        pageNumber: pagingController.value.pageNumber);
+    if (!isNetAvailable.value) {
+      var localData = await localRepository.getGithubRepos();
+      _handleGithubRepoListLocal(localData);
+    } else {
+      var queryParams = SearchQueryParam(
+          searchKeyWord: 'Flutter',
+          pageNumber: pagingController.value.pageNumber);
 
-    var githubRepoService = remoteRepository.getGithubRepos(queryParams);
-    callDataService(githubRepoService, onSuccess: _handleGithubRepoList);
+      var githubRepoService = remoteRepository.getGithubRepos(queryParams);
+      callDataService(githubRepoService,
+          onSuccess: _handleGithubRepoListRemote);
+    }
 
     pagingController.value.isLoadingPage = false;
   }
@@ -55,7 +75,7 @@ class DashboardController extends BaseController {
     return (githubItems.length + newListItemCount) >= totalCount;
   }
 
-  void _handleGithubRepoList(GithubItemModel itemModel) {
+  void _handleGithubRepoListRemote(GithubItemModel itemModel) {
     List<UiData>? repoList = itemModel.items
         .map((e) => UiData(
             repoName: e.name,
@@ -73,9 +93,25 @@ class DashboardController extends BaseController {
       pagingController.value.appendPage(repoList);
     }
 
-    var newList = [...pagingController.value.listItems];
+    githubItemsController.value = [...pagingController.value.listItems];
 
-    githubItemsController(newList);
+    GithubStore().saveGithubRepo(itemModel);
+    update();
+  }
+
+  void _handleGithubRepoListLocal(GithubItemModel itemModel) {
+    List<UiData>? repoList = itemModel.items
+        .map((e) => UiData(
+            repoName: e.name,
+            owner: e.owner,
+            starNo: e.stargazersCount,
+            scores: e.score,
+            forkNo: e.forksCount,
+            updateDate: e.updatedAt,
+            description: e.description))
+        .toList();
+
+    githubItemsController(repoList);
   }
 
   void changeSortItemValue(val) {

@@ -8,6 +8,7 @@ import '/app/core/values/app_values.dart';
 class PagingView extends StatelessWidget {
   final Widget child;
   final Function() onLoadNextPage;
+  final bool isNetAvailable;
   final Future<void> Function()? onRefresh;
 
   ScrollController? scrollController;
@@ -18,6 +19,7 @@ class PagingView extends StatelessWidget {
     Key? key,
     required this.child,
     required this.onLoadNextPage,
+    required this.isNetAvailable,
     this.onRefresh,
     this.scrollController,
   }) : super(key: key) {
@@ -57,7 +59,9 @@ class PagingView extends StatelessWidget {
       child: Column(
         children: [
           child,
-          Center(child: CircularProgressIndicator())
+          Visibility(
+              visible: isNetAvailable,
+              child: Center(child: CircularProgressIndicator()))
         ],
       ),
     );

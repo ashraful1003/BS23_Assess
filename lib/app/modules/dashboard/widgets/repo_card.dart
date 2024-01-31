@@ -17,8 +17,8 @@ class RepoCard extends StatelessWidget {
         Get.toNamed(Routes.PROJECT_DETAILS, arguments: item);
       },
       child: Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           width: Get.width,
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -37,11 +37,11 @@ class RepoCard extends StatelessWidget {
                     child: CachedNetworkImage(
                         imageUrl: item.owner.avatarUrl,
                         placeholder: (context, url) =>
-                            Center(child: CircularProgressIndicator())),
+                            const Center(child: CircularProgressIndicator())),
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -22,6 +22,7 @@ class DashboardScreen extends StatelessWidget {
         onLoadNextPage: () {
           controller.onLoadNextPage();
         },
+        isNetAvailable: controller.isNetAvailable.value,
         child: Column(
           children: [
             Obx(() => ListView.builder(
