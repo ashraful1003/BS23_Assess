@@ -9,8 +9,7 @@ import '/app/network/dio_provider.dart';
 class GithubRemoteDataSourceImpl extends BaseRemoteSource
     implements DashboardRemoteRepository {
   @override
-  Future<GithubItemModel> getGithubRepos(
-      SearchQueryParam queryParam) {
+  Future<GithubItemModel> getGithubRepos(SearchQueryParam queryParam) {
     var endpoint = "${DioProvider.baseUrl}/search/repositories";
     var dioCall = dioClient.get(endpoint, queryParameters: queryParam.toJson());
 
@@ -22,8 +21,8 @@ class GithubRemoteDataSourceImpl extends BaseRemoteSource
     }
   }
 
-  GithubItemModel _parseGithubRepoResponse(
-      Response<dynamic> response) {
+  GithubItemModel _parseGithubRepoResponse(Response<dynamic> response) {
+    // print(response.data);
     return GithubItemModel.fromJson(response.data);
   }
 }

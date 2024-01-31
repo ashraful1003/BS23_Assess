@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 import '/app/core/model/page_state.dart';
 import '/app/network/exceptions/api_exception.dart';
@@ -14,7 +13,6 @@ import '/app/network/exceptions/unauthorize_exception.dart';
 import '/flavors/build_config.dart';
 
 abstract class BaseController extends GetxController {
-  final Logger logger = BuildConfig.instance.config.logger;
 
   final logoutController = false.obs;
 
@@ -101,7 +99,6 @@ abstract class BaseController extends GetxController {
       showErrorMessage(exception.message);
     } catch (error) {
       _exception = AppException(message: "$error");
-      logger.e("Controller>>>>>> error $error");
     }
 
     if (onError != null) onError(_exception);

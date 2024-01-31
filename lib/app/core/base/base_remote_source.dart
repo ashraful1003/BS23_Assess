@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
@@ -8,8 +10,6 @@ import '/flavors/build_config.dart';
 
 abstract class BaseRemoteSource {
   Dio get dioClient => DioProvider.dioWithHeaderToken;
-
-  final logger = BuildConfig.instance.config.logger;
 
   Future<Response<T>> callApiWithErrorParser<T>(Future<Response<T>> api) async {
     try {
@@ -22,18 +22,26 @@ abstract class BaseRemoteSource {
       }
 
       return response;
-    } on DioError catch (dioError) {
+    } on DioException catch (dioError) {
       Exception exception = handleDioError(dioError);
-      logger.e(
-          "Throwing error from repository: >>>>>>> $exception : ${(exception as BaseException).message}");
       throw exception;
     } catch (error) {
-      logger.e("Generic error: >>>>>>> $error");
-
       if (error is BaseException) {
         rethrow;
       }
 
+      throw handleError("$error");
+    }
+  }
+
+  Future<T> fetchLocalWithErrorParser<T>(String local) {
+    try {
+      var response = json.decode(local);
+      return response;
+    } catch (error) {
+      if (error is BaseException) {
+        rethrow;
+      }
       throw handleError("$error");
     }
   }

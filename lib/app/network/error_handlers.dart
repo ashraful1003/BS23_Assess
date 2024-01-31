@@ -11,9 +11,6 @@ import '/app/network/exceptions/service_unavailable_exception.dart';
 import '/flavors/build_config.dart';
 
 Exception handleError(String error) {
-  final logger = BuildConfig.instance.config.logger;
-  logger.e("Generic exception: $error");
-
   return AppException(message: error);
 }
 
@@ -39,8 +36,6 @@ Exception handleDioError(DioException dioError) {
 }
 
 Exception _parseDioErrorResponse(DioException dioError) {
-  final logger = BuildConfig.instance.config.logger;
-
   int statusCode = dioError.response?.statusCode ?? -1;
   String? status;
   String? serverMessage;
@@ -52,9 +47,6 @@ Exception _parseDioErrorResponse(DioException dioError) {
     status = dioError.response?.data["status"];
     serverMessage = dioError.response?.data["message"];
   } catch (e, s) {
-    logger.i("$e");
-    logger.i(s.toString());
-
     serverMessage = "Something went wrong. Please try again later.";
   }
 

@@ -1,4 +1,5 @@
 import 'package:bs23_assess/app/core/base/paging_controller.dart';
+import 'package:bs23_assess/app/data/remote/dashboard_local_repository.dart';
 import 'package:bs23_assess/app/data/remote/dashboard_remote_repository.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/github_item_model.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/search_query_params.dart';
@@ -7,8 +8,11 @@ import 'package:get/get.dart';
 import 'package:bs23_assess/app/core/base/base_controller.dart';
 
 class DashboardController extends BaseController {
-  final DashboardRemoteRepository repository =
+  final DashboardRemoteRepository remoteRepository =
       Get.find(tag: (DashboardRemoteRepository).toString());
+
+  final DashboardLocalRepository localRepository =
+      Get.find(tag: (DashboardLocalRepository).toString());
 
   Rx<PagingController<UiData>> pagingController =
       PagingController<UiData>().obs;
@@ -21,28 +25,28 @@ class DashboardController extends BaseController {
   void onInit() {
     super.onInit();
     sortItems.value = ['Updated Date', 'Star Count'];
-    getGithubRepoList();
+    getGithubRepoListRemote();
   }
 
   Rx<List<UiData>> githubItemsController = Rx<List<UiData>>([]);
 
   List<UiData> get githubItems => githubItemsController.value.toList();
 
-  void getGithubRepoList() {
+  void getGithubRepoListRemote() {
     if (!pagingController.value.canLoadNextPage()) return;
 
     pagingController.value.isLoadingPage = true;
 
-    var queryParams = SearchQueryParam(searchKeyWord: 'Flutter', perPage: 10);
+    var queryParams = SearchQueryParam(searchKeyWord: 'Flutter', pageNumber: pagingController.value.pageNumber);
 
-    var githubRepoService = repository.getGithubRepos(queryParams);
+    var githubRepoService = remoteRepository.getGithubRepos(queryParams);
     callDataService(githubRepoService, onSuccess: _handleGithubRepoList);
 
     pagingController.value.isLoadingPage = false;
   }
 
   onLoadNextPage() {
-    getGithubRepoList();
+    getGithubRepoListRemote();
   }
 
   bool _isLastPage(int newListItemCount, int totalCount) {
@@ -76,9 +80,9 @@ class DashboardController extends BaseController {
     var newList = githubItemsController.value.toList();
     if (sortType.value.compareTo('Star Count') == 0) {
       newList.sort((item1, item2) => item2.starNo.compareTo(item1.starNo));
-    }
-    else{
-      newList.sort((item1, item2) => item2.updateDate.compareTo(item1.updateDate));
+    } else {
+      newList
+          .sort((item1, item2) => item2.updateDate.compareTo(item1.updateDate));
     }
     githubItemsController(newList);
     update();
