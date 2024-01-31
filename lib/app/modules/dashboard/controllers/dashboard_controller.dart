@@ -13,9 +13,14 @@ class DashboardController extends BaseController {
   Rx<PagingController<UiData>> pagingController =
       PagingController<UiData>().obs;
 
+  Rx<List<String>> sortItems = Rx<List<String>>([]);
+  RxString sortType = ''.obs;
+  RxString text = "".obs;
+
   @override
   void onInit() {
     super.onInit();
+    sortItems.value = ['Updated Date', 'Star Count'];
     getGithubRepoList();
   }
 
@@ -47,10 +52,12 @@ class DashboardController extends BaseController {
   void _handleGithubRepoList(GithubItemModel itemModel) {
     List<UiData>? repoList = itemModel.items
         .map((e) => UiData(
-            repoName: e.name,
-            ownerName: e.owner.login,
-            starNo: e.stargazersCount,
-            scores: e.score))
+              repoName: e.name,
+              ownerName: e.owner.login,
+              starNo: e.stargazersCount,
+              scores: e.score,
+              updateDate: e.updatedAt,
+            ))
         .toList();
 
     if (_isLastPage(repoList.length, itemModel.totalCount)) {
@@ -62,5 +69,18 @@ class DashboardController extends BaseController {
     var newList = [...pagingController.value.listItems];
 
     githubItemsController(newList);
+  }
+
+  void changeSortItemValue(val) {
+    sortType.value = val;
+    var newList = githubItemsController.value.toList();
+    if (sortType.value.compareTo('Star Count') == 0) {
+      newList.sort((item1, item2) => item2.starNo.compareTo(item1.starNo));
+    }
+    else{
+      newList.sort((item1, item2) => item2.updateDate.compareTo(item1.updateDate));
+    }
+    githubItemsController(newList);
+    update();
   }
 }

@@ -8,7 +8,7 @@ class ProjectDetailsController extends BaseController {
   final DashboardRepository repository =
       Get.find(tag: (DashboardRepository).toString());
 
-  final Rx<UiData> _projectDetailsUiData = UiData().obs;
+  final Rx<UiData> _projectDetailsUiData = UiData(updateDate: DateTime.now()).obs;
 
   UiData get projectDetailsUiData => _projectDetailsUiData.value;
 
@@ -38,6 +38,7 @@ class ProjectDetailsController extends BaseController {
       forkNo: project.forks,
       scores: project.score,
       description: project.description,
+      updateDate: project.updatedAt,
     ));
   }
 }

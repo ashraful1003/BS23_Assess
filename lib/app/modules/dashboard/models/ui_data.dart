@@ -6,6 +6,7 @@ class UiData {
   int starNo;
   int forkNo;
   double scores;
+  DateTime updateDate;
 
   UiData(
       {this.repoName = '',
@@ -14,5 +15,6 @@ class UiData {
       this.description = '',
       this.starNo = 0,
       this.forkNo = 0,
-      this.scores = 0});
+      this.scores = 0,
+      required this.updateDate});
 }

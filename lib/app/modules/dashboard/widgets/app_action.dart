@@ -1,15 +1,52 @@
+import 'package:bs23_assess/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppAction extends StatelessWidget {
-  const AppAction({super.key});
+  const AppAction({super.key, required this.controller});
+
+  final DashboardController controller;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: 5),
-        width: Get.width / 3,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5), color: Colors.white));
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      width: Get.width/2.5,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade400),
+      ),
+      alignment: Alignment.centerLeft,
+      child: Obx(() {
+        List<String> items = controller.sortItems.value;
+        return DropdownButton(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          value: controller.sortType.value == ""
+              ? null
+              : controller.sortType.value,
+          isExpanded: true,
+          iconEnabledColor: Colors.grey.shade400,
+          underline: const SizedBox(),
+          hint: const Text("Select"),
+          icon: const Icon(Icons.keyboard_arrow_down),
+          items: items.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: Text(
+                items,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            controller.changeSortItemValue(newValue!);
+          },
+        );
+      }),
+    );
   }
 }
