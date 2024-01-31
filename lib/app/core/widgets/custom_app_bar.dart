@@ -7,12 +7,14 @@ import '/app/core/values/app_colors.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appBarTitleText;
   final List<Widget>? actions;
+  final bool isCenterTitle;
   final bool isBackButtonEnabled;
 
   const CustomAppBar(
       {Key? key,
       required this.appBarTitleText,
       this.actions,
+      this.isCenterTitle = true,
       this.isBackButtonEnabled = true})
       : super(key: key);
 
@@ -23,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColors.appBarColor,
-      centerTitle: true,
+      centerTitle: isCenterTitle,
       elevation: 0,
       automaticallyImplyLeading: isBackButtonEnabled,
       actions: actions,
