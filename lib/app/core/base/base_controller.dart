@@ -10,18 +10,17 @@ import '/app/network/exceptions/network_exception.dart';
 import '/app/network/exceptions/not_found_exception.dart';
 import '/app/network/exceptions/service_unavailable_exception.dart';
 import '/app/network/exceptions/unauthorize_exception.dart';
-import '/flavors/build_config.dart';
 
 abstract class BaseController extends GetxController {
 
   final logoutController = false.obs;
 
-  //Reload the page
+  /// Reload the page
   final _refreshController = false.obs;
 
   refreshPage(bool refresh) => _refreshController(refresh);
 
-  //Controls page state
+  /// Controls page state
   final _pageSateController = PageState.DEFAULT.obs;
 
   PageState get pageState => _pageSateController.value;
@@ -95,13 +94,9 @@ abstract class BaseController extends GetxController {
     } on ApiException catch (exception) {
       _exception = exception;
     } on AppException catch (exception) {
-      print('##############1111');
-      print(exception.message);
       _exception = exception;
       showErrorMessage(exception.message);
     } catch (error) {
-      print('##############1112');
-      print(error.toString());
       _exception = AppException(message: "$error");
     }
 

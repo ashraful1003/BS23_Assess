@@ -22,7 +22,6 @@ class GithubRemoteDataSourceImpl extends BaseRemoteSource
   }
 
   GithubItemModel _parseGithubRepoResponse(Response<dynamic> response) {
-    // print(response.data);
     return GithubItemModel.fromJson(response.data);
   }
 }

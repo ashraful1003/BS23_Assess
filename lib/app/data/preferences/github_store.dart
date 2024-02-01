@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bs23_assess/app/core/utils/constants.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/github_item_model.dart';
-import 'package:bs23_assess/app/modules/dashboard/models/ui_data.dart';
 import 'package:get/get.dart';
 
 import 'storage_services.dart';

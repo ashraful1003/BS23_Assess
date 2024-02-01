@@ -1,3 +1,4 @@
+import 'package:bs23_assess/app/core/values/app_values.dart';
 import 'package:bs23_assess/app/modules/dashboard/models/ui_data.dart';
 import 'package:bs23_assess/app/routes/app_pages.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,9 +14,7 @@ class RepoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(Routes.PROJECT_DETAILS, arguments: item);
-      },
+      onTap: _onTap,
       child: Container(
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -41,32 +40,41 @@ class RepoCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: Get.width / 1.5,
-                    child: Text('Owner: ${item.owner.login}',
-                        softWrap: true, style: const TextStyle(fontSize: 20)),
-                  ),
-                  SizedBox(
-                    width: Get.width / 1.5,
-                    child: Text('Repo: ${item.repoName}',
-                        softWrap: true,
-                        style: const TextStyle(fontSize: 20)),
-                  ),
-                  Text('Star Count: ${item.starNo}',
-                      style: const TextStyle(fontSize: 20)),
-                  SizedBox(
-                    width: Get.width / 1.5,
-                    child: Text(
-                        'Updated: ${DateFormat('dd MMM, yyyy').format(item.updateDate)}',
-                        style: const TextStyle(fontSize: 20)),
-                  ),
-                ],
-              ),
+              _getDetails(),
             ],
           )),
     );
+  }
+
+  Widget _getDetails() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: Get.width / 1.5,
+          child: Text('Owner: ${item.owner.login}',
+              softWrap: true,
+              style: const TextStyle(fontSize: AppValues.iconSize_18)),
+        ),
+        SizedBox(
+          width: Get.width / 1.5,
+          child: Text('Repo: ${item.repoName}',
+              softWrap: true,
+              style: const TextStyle(fontSize: AppValues.iconSize_18)),
+        ),
+        Text('Star Count: ${item.starNo}',
+            style: const TextStyle(fontSize: AppValues.iconSize_18)),
+        SizedBox(
+          width: Get.width / 1.5,
+          child: Text(
+              'Updated: ${DateFormat('dd MMM, yyyy').format(item.updateDate)}',
+              style: const TextStyle(fontSize: AppValues.iconSize_18)),
+        ),
+      ],
+    );
+  }
+
+  void _onTap() {
+    Get.toNamed(Routes.PROJECT_DETAILS, arguments: item);
   }
 }

@@ -21,48 +21,64 @@ class ProjectDetailsScreen extends GetView<ProjectDetailsController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 15),
+                margin: const EdgeInsets.only(top: 15),
                 alignment: Alignment.center,
                 child: Hero(
                   tag: controller.uiData.repoName,
                   child: Container(
                     height: Get.height / 8,
                     width: Get.height / 8,
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border:
-                        Border.all(color: Colors.green.shade200, width: 2)),
+                            Border.all(color: Colors.green.shade200, width: 2)),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: CachedNetworkImage(
                           imageUrl: controller.uiData.owner.avatarUrl,
                           placeholder: (context, url) =>
-                              Center(child: CircularProgressIndicator())),
+                              const Center(child: CircularProgressIndicator())),
                     ),
                   ),
                 ),
               ),
-              TextWidget(
-                  title: 'Profile Link: ', value: controller.uiData.owner.url),
-              TextWidget(title: 'Repo: ', value: controller.uiData.repoName),
-              TextWidget(
-                  title: 'Star Count: ',
-                  value: controller.uiData.starNo.toString()),
-
-              TextWidget(
-                  title: 'Updated: ',
-                  value: DateFormat('dd MMM, yyyy hh:mm a').format(
-                      controller.uiData.updateDate)),
-              SizedBox(height: 15),
-              Text('Description', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              Divider(),
-              Text(controller.uiData.description,
-                  style: const TextStyle(fontSize: 18)),
+              _ownerInfo(),
+              const SizedBox(height: 15),
+              _description(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _ownerInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextWidget(title: 'Profile Link: ', value: controller.uiData.owner.url),
+        TextWidget(title: 'Repo: ', value: controller.uiData.repoName),
+        TextWidget(
+            title: 'Star Count: ', value: controller.uiData.starNo.toString()),
+        TextWidget(
+            title: 'Updated: ',
+            value: DateFormat('dd MMM, yyyy hh:mm a')
+                .format(controller.uiData.updateDate)),
+      ],
+    );
+  }
+
+  Widget _description() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Description',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const Divider(),
+        Text(controller.uiData.description,
+            style: const TextStyle(fontSize: 18)),
+      ],
     );
   }
 }

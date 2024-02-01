@@ -1,3 +1,4 @@
+import 'package:bs23_assess/app/core/values/app_values.dart';
 import 'package:bs23_assess/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,9 +36,9 @@ class AppAction extends StatelessWidget {
               value: items,
               child: Text(
                 items,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: AppValues.iconSize_14,
                 ),
               ),
             );

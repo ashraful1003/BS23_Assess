@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '/app/core/utils/debouncer.dart';
-import '/app/core/values/app_values.dart';
 
 ///ignore: must_be_immutable
 class PagingView extends StatelessWidget {
@@ -61,7 +60,7 @@ class PagingView extends StatelessWidget {
           child,
           Visibility(
               visible: isNetAvailable,
-              child: Center(child: CircularProgressIndicator()))
+              child: const Center(child: CircularProgressIndicator()))
         ],
       ),
     );

@@ -7,7 +7,6 @@ import 'package:bs23_assess/app/modules/dashboard/models/search_query_params.dar
 import 'package:bs23_assess/app/modules/dashboard/models/ui_data.dart';
 import 'package:bs23_assess/app/routes/app_pages.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bs23_assess/app/core/base/base_controller.dart';
 
@@ -32,9 +31,6 @@ class DashboardController extends BaseController {
   void onInit() {
     super.onInit();
     sortItems.value = ['Updated Date', 'Star Count'];
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Get.toNamed(Routes.NO_INTERNET);
-    // });
 
     netAvailable()
         .then((value) => timeDiff().then((value) => getGithubRepoListRemote()));
@@ -59,7 +55,7 @@ class DashboardController extends BaseController {
     String getTime = localRepository.getTime();
     if (getTime.isNotEmpty) {
       lastApiCall = DateTime(int.parse(getTime));
-      Duration duration = Duration(seconds: 30);
+      Duration duration = const Duration(seconds: 30);
       DateTime subTime = DateTime.now().subtract(duration);
       if (lastApiCall != null) isTimeToFetch(lastApiCall!.isAfter(subTime));
     }
@@ -70,29 +66,24 @@ class DashboardController extends BaseController {
 
     pagingController.value.isLoadingPage = true;
 
-    // if (isNetAvailable.value || isTimeToFetch.value) {
+    if (isNetAvailable.value || isTimeToFetch.value) {
       var queryParams = SearchQueryParam(
           searchKeyWord: 'Flutter',
           pageNumber: pagingController.value.pageNumber);
 
-      print('##############');
-
-      print(queryParams.pageNumber);
-
       var githubRepoService = remoteRepository.getGithubRepos(queryParams);
-      print('temp');
       callDataService(githubRepoService,
           onError: (e){print(e.toString());},
           onSuccess: _handleGithubRepoListRemote);
-    // } else {
-    //   if (!isTimeToFetch.value) {
-    //     /// first with no internet
-    //     Get.toNamed(Routes.NO_INTERNET);
-    //   } else {
-    //     var localData = await localRepository.getGithubRepos();
-    //     _handleGithubRepoListLocal(localData);
-    //   }
-    // }
+    } else {
+      if (!isTimeToFetch.value) {
+        /// first with no internet
+        Get.toNamed(Routes.NO_INTERNET);
+      } else {
+        var localData = await localRepository.getGithubRepos();
+        _handleGithubRepoListLocal(localData);
+      }
+    }
 
     pagingController.value.isLoadingPage = false;
   }
@@ -106,7 +97,6 @@ class DashboardController extends BaseController {
   }
 
   void _handleGithubRepoListRemote(GithubItemModel itemModel) {
-    print('##############1');
     List<UiData>? repoList = itemModel.items
         .map((e) => UiData(
             repoName: e.name,
@@ -122,16 +112,11 @@ class DashboardController extends BaseController {
 
     if (_isLastPage(repoList.length, itemModel.totalCount)) {
       pagingController.value.appendLastPage(repoList);
-      print('##############3');
     } else {
-      print('##############4');
       pagingController.value.appendPage(repoList);
     }
 
     githubItemsController.value = [...pagingController.value.listItems];
-
-    print(githubItemsController.value.length);
-    print('##############2');
 
     GithubStore().saveGithubRepo(itemModel);
 

@@ -6,7 +6,6 @@ import 'package:get/get_connect/http/src/status/http_status.dart';
 import '/app/network/dio_provider.dart';
 import '/app/network/error_handlers.dart';
 import '/app/network/exceptions/base_exception.dart';
-import '/flavors/build_config.dart';
 
 abstract class BaseRemoteSource {
   Dio get dioClient => DioProvider.dioWithHeaderToken;
