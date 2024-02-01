@@ -24,7 +24,8 @@ class ProjectDetailsScreen extends GetView<ProjectDetailsController> {
                 margin: const EdgeInsets.only(top: 15),
                 alignment: Alignment.center,
                 child: Hero(
-                  tag: controller.uiData.repoName,
+                  tag:
+                      '${controller.uiData.owner.login}${controller.uiData.repoName}',
                   child: Container(
                     height: Get.height / 8,
                     width: Get.height / 8,

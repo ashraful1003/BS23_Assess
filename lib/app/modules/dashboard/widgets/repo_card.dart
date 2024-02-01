@@ -26,7 +26,7 @@ class RepoCard extends StatelessWidget {
           child: Row(
             children: [
               Hero(
-                tag: item.repoName,
+                tag: '${item.owner.login}${item.repoName}',
                 child: SizedBox(
                   height: Get.height / 15,
                   width: Get.height / 15,
