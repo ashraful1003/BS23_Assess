@@ -95,9 +95,13 @@ abstract class BaseController extends GetxController {
     } on ApiException catch (exception) {
       _exception = exception;
     } on AppException catch (exception) {
+      print('##############1111');
+      print(exception.message);
       _exception = exception;
       showErrorMessage(exception.message);
     } catch (error) {
+      print('##############1112');
+      print(error.toString());
       _exception = AppException(message: "$error");
     }
 

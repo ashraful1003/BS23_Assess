@@ -23,8 +23,7 @@ class RepoCard extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: Colors.green.shade200,
-            borderRadius: BorderRadius.circular(8)
-          ),
+              borderRadius: BorderRadius.circular(8)),
           child: Row(
             children: [
               Hero(
@@ -45,15 +44,25 @@ class RepoCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Owner: ${item.owner.login}',
-                      style: const TextStyle(fontSize: 20)),
-                  Text('Repo: ${item.repoName}',
-                      style: const TextStyle(fontSize: 20)),
+                  SizedBox(
+                    width: Get.width / 1.5,
+                    child: Text('Owner: ${item.owner.login}',
+                        softWrap: true, style: const TextStyle(fontSize: 20)),
+                  ),
+                  SizedBox(
+                    width: Get.width / 1.5,
+                    child: Text('Repo: ${item.repoName}',
+                        softWrap: true,
+                        style: const TextStyle(fontSize: 20)),
+                  ),
                   Text('Star Count: ${item.starNo}',
                       style: const TextStyle(fontSize: 20)),
-                  Text(
-                      'Updated: ${DateFormat('dd MMM, yyyy').format(item.updateDate)}',
-                      style: const TextStyle(fontSize: 20)),
+                  SizedBox(
+                    width: Get.width / 1.5,
+                    child: Text(
+                        'Updated: ${DateFormat('dd MMM, yyyy').format(item.updateDate)}',
+                        style: const TextStyle(fontSize: 20)),
+                  ),
                 ],
               ),
             ],

@@ -191,7 +191,7 @@ class GitHubItem {
         // private: json["private"],
         owner: Owner.fromJson(json["owner"]),
         // htmlUrl: json["html_url"],
-        description: json["description"],
+        description: json["description"]??'',
         // fork: json["fork"],
         // url: json["url"],
         // forksUrl: json["forks_url"],
@@ -234,7 +234,7 @@ class GitHubItem {
         // releasesUrl: json["releases_url"],
         // deploymentsUrl: json["deployments_url"],
         // size: json["size"],
-        stargazersCount: json["stargazers_count"],
+        stargazersCount: json["stargazers_count"]??0,
         // watchersCount: json["watchers_count"],
         // language: json["language"],
         // hasIssues: json["has_issues"],
@@ -243,7 +243,7 @@ class GitHubItem {
         // hasWiki: json["has_wiki"],
         // hasPages: json["has_pages"],
         // hasDiscussions: json["has_discussions"],
-        forksCount: json["forks_count"],
+        forksCount: json["forks_count"]??0,
         // mirrorUrl: json["mirror_url"],
         // archived: json["archived"],
         // disabled: json["disabled"],
@@ -257,7 +257,7 @@ class GitHubItem {
         // forks: json["forks"],
         // openIssues: json["open_issues"],
         // watchers: json["watchers"],
-        score: json["score"] ?? 0,
+        score: json["score"] ?? 0.0,
       );
 
   Map<String, dynamic> toJson() => {

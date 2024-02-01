@@ -10,6 +10,7 @@ class NoInternetScreen extends StatelessWidget {
       body: Container(
         height: Get.height,
         width: Get.width,
+        margin: EdgeInsets.all(10),
         alignment: Alignment.center,
         child: Text(
             'There is nothing in cache! Please Enable your Internet to fetch data.'),
