@@ -15,7 +15,7 @@ class GithubStore extends GetxController {
         .setString(STORAGE_GITHUB_REPO, json.encode(githubItemModel));
   }
 
-  Future<void> saveApiCallTime(String time) async {
-    await StorageService.to.setString(STORAGE_LAST_API_CALL, time);
+  Future<void> saveApiCallTime(int time) async {
+    await StorageService.to.setString(STORAGE_LAST_API_CALL, time.toString());
   }
 }

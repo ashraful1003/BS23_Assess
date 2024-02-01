@@ -17,6 +17,15 @@ class GithubLocalDataSourceImpl extends BaseRemoteSource
     }
   }
 
+  @override
+  String getTime() {
+    try {
+      return StorageService.to.getString(STORAGE_LAST_API_CALL);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   GithubItemModel _parseGithubRepoResponse(response) {
     return GithubItemModel.fromJson(response);
   }

@@ -6,9 +6,11 @@ abstract class Routes {
 
   static const DASHBOARD = _Paths.DASHBOARD;
   static const PROJECT_DETAILS = _Paths.PROJECT_DETAILS;
+  static const NO_INTERNET = _Paths.NO_INTERNET;
 }
 
 abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const PROJECT_DETAILS = '/project-details';
+  static const NO_INTERNET = '/no-internet';
 }
